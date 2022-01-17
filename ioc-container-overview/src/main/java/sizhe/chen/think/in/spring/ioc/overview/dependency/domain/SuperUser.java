@@ -18,6 +18,6 @@ public class SuperUser extends User {
     public String toString() {
         return "SuperUser{" +
                 "address='" + address + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }
