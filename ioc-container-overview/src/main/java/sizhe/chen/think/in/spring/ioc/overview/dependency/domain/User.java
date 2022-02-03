@@ -6,6 +6,14 @@ public class User {
     private Long id;
     private Integer age;
 
+    public static User createUser(){
+        User user = new User();
+        user.setId(1L);
+        user.setAge(22);
+        user.setName("王五");
+        return user;
+    }
+
     public String getName() {
         return name;
     }
