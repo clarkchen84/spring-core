@@ -35,4 +35,10 @@ public class InitialTestUserFactory implements UserFactory , InitializingBean, D
     public void destroy() throws Exception {
         System.out.println("接口DisposedBean  :user factory 销毁中");
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("当前InitialTestUserFactory 正在被回收");
+        super.finalize();
+    }
 }
