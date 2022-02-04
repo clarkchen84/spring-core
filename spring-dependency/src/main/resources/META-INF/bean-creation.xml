@@ -6,19 +6,13 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
-    <import resource="DependencyLookUp.xml"/>
-    <bean name="userRepository"
-          class="sizhe.chen.think.in.spring.ioc.overview.dependency.repository.UserRepository"
-       autowire="byType" >
-<!--        <property name="userCollection" >-->
-<!--手动注入-->
-            <!--            <util:list >-->
-<!--                <ref bean="user"/>-->
-<!--                <ref bean="superUser"/>-->
-<!--            </util:list>-->
+    <bean id="user-by-static-method" class="sizhe.chen.think.in.spring.dependency.domain.User"
+          factory-method="createUser"/>
+    <bean id="userFactory" class="sizhe.chen.think.in.spring.dependency.factory.DefaultUserFactory"/>
+    <bean id="user-by-factory-method" factory-bean="userFactory"
+        factory-method="create"  />
+    <bean id="user-by-factory-bean" class="sizhe.chen.think.in.spring.dependency.factory.UserFactoryBean" />
 
-<!--        </property>-->
-    </bean>
 
 
 </beans>
