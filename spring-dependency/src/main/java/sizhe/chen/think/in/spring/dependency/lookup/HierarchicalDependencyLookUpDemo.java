@@ -16,6 +16,7 @@ public class HierarchicalDependencyLookUpDemo {
     public static void main(String[] args) {
         //1. 获取HierarchicalBeanFactory<-ConfigurableBeanFactory<-ConfigurableListableBeanFactory
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+
         ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
         context.register(HierarchicalDependencyLookUpDemo.class);
         System.out.println("当前BeanFactory的父BeanFactory:" + beanFactory.getParentBeanFactory());
@@ -45,6 +46,7 @@ public class HierarchicalDependencyLookUpDemo {
     }
 
     public static boolean containsBean(HierarchicalBeanFactory hierarchicalBeanFactory,String name){
+
         if(hierarchicalBeanFactory.containsLocalBean(name)){
             return true;
         }
