@@ -10,6 +10,8 @@
         <property name="id" value="1"/>
         <property name="name" value="张三"/>
         <property name="age" value="20"/>
+        <property name="city" value="HANGZHOU"/>
+        <property name="configLocation" value="classpath:/META-INF/user-config.properties"/>
     </bean>
     <bean id="superUser" class="sizhe.chen.think.in.spring.ioc.overview.dependency.domain.SuperUser" parent="user" primary="true">
         <property name="address" value="大兴"/>
@@ -18,6 +20,8 @@
         <property name="targetBeanName" value="user"/>
     </bean>
 
-
+    <bean id="holder" class="sizhe.chen.thinking.in.spring.ioc.dependency.injection.UserHolder" >
+        <property name="user" ref="superUser"/>
+    </bean>
 
 </beans>
