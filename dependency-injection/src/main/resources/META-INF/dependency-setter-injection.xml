@@ -17,9 +17,7 @@
     <bean id="objectFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
         <property name="targetBeanName" value="user"/>
     </bean>
-    <bean id="holder" class="sizhe.chen.thinking.in.spring.ioc.dependency.injection.UserHolder">
-        <property name="user" ref="superUser"/>
-    </bean>
+
 
 
 </beans>
