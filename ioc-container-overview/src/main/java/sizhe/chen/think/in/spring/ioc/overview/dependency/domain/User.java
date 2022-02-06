@@ -3,6 +3,9 @@ package sizhe.chen.think.in.spring.ioc.overview.dependency.domain;
 import org.springframework.core.io.Resource;
 import sizhe.chen.think.in.spring.ioc.overview.dependency.enums.City;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class User {
 
     private String name;
@@ -10,6 +13,25 @@ public class User {
     private Integer age;
     private City city;
     private Resource configLocation;
+    private City[] workCities;
+
+    public List<City> getLifeCities() {
+        return lifeCities;
+    }
+
+    public void setLifeCities(List<City> lifeCities) {
+        this.lifeCities = lifeCities;
+    }
+
+    private List<City> lifeCities;
+
+    public City[] getWorkCities() {
+        return workCities;
+    }
+
+    public void setWorkCities(City[] workCities) {
+        this.workCities = workCities;
+    }
 
     public Resource getConfigLocation() {
         return configLocation;
@@ -72,6 +94,8 @@ public class User {
                 ", age=" + age +
                 ", city=" + city +
                 ", configLocation=" + configLocation +
+                ", workCities=" + Arrays.toString(workCities) +
+                ", lifeCities=" + lifeCities +
                 '}';
     }
 }

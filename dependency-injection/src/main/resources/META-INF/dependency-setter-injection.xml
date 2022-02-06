@@ -11,6 +11,14 @@
         <property name="name" value="张三"/>
         <property name="age" value="20"/>
         <property name="city" value="HANGZHOU"/>
+        <property name="workCities">
+            <util:list>
+                <value>HANGZHOU</value>
+                <value>BEIJING</value>
+            </util:list>
+        </property>
+        <property name="lifeCities" value="BEIJING,SHANGHAI">
+        </property>
         <property name="configLocation" value="classpath:/META-INF/user-config.properties"/>
     </bean>
     <bean id="superUser" class="sizhe.chen.think.in.spring.ioc.overview.dependency.domain.SuperUser" parent="user" primary="true">
