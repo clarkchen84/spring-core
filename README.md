@@ -46,7 +46,85 @@
 </beans>
 ```
 
+#### 限定注入
 
+* 限定注入的作用 `@Qualifier`
+  * 开始用名称进行限定
+
+    ``` java
+    @Autowired
+    @Qualifier("user") //指定名称或者ID 进行注入
+    private User nameUser;
+    ```
+    
+  * 用来对bean 进行分组
+  
+    * **我觉得这里面allUser没有注入4个bean的原因是通过这个方式自动注入， 只注入成功了通过xml的方式注入的javabean**
+    
+      ***当我完全使用Annotation 的方式注入java bean的场合。 allUser中注入的是4个bean***
+    
+    ```java
+     //整体上下问存在4个User类型的bean ,user ，superUser 通过xml的凡事注入， 两个通过java注解的方式进行注入
+    @Autowired
+    private Collection<User>   allUsers;// allUser注入的是没有使用@Qualifer 注入的两个通过XML注入的bean
+    
+    @Autowired
+    @Qualifier
+    private Collection<User>   qualifierUsers; //qualifierUsers 注入的是通过@Qualifer注入的两个
+    																					//使用java注解的方式注入的bean
+    @Bean
+    @Qualifier// 进行逻辑分组
+    public User user1(){
+      return User.createUser();
+    }
+    
+    @Bean
+    @Qualifier// 进行逻辑分组
+    public User user2(){
+      User user  =  User.createUser();
+    
+      user.setName("wangxiaowu");
+      return user;
+    }
+    ```
+  
+* 基于`@Qualifier`的扩展
+
+  * SpringCloud的注解 @LoadBalance
+  
+  ``` java
+   @UserGroup
+      private Collection<User>   userGroups;
+      @Bean
+      @UserGroup
+      public User user3(){
+          User user  =  User.createUser();
+  
+          user.setName("yanxiaoqi");
+          return user;
+      }
+      @Bean
+      @UserGroup
+      public User user4(){
+          User user  =  User.createUser();
+  
+          user.setName("小七");
+          return user;
+      }
+  
+  @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+  @Retention(RetentionPolicy.RUNTIME)
+  @Inherited
+  @Documented
+  @Qualifier
+  public @interface UserGroup {
+  }
+  
+  ```
+  
+  
+
+​    
 
 
 
