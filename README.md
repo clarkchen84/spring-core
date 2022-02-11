@@ -121,8 +121,28 @@
   }
   
   ```
-  
-  
+
+ #### 延迟注入
+ * 通过@Autowired 标注 ObjectProvider<对象类型> 可以进行延迟加载
+ * 使用ObjectFactory同样也能进行延迟加载
+ * 使用ObjectProvider比较好，应为ObjectProvider 是类型安全的
+ ``` java
+  @Autowired
+    private User user;
+    @Autowired
+    private ObjectProvider<User> userObjectProvider;
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(LazyAnnotationDependencyInjectDemo.class);
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(context);
+        reader.loadBeanDefinitions("classpath:/META-INF/dependency-setter-injection.xml");
+        context.refresh();
+        LazyAnnotationDependencyInjectDemo dependencyInjectDemo = context.getBean(LazyAnnotationDependencyInjectDemo.class);
+        dependencyInjectDemo.userObjectProvider.stream().forEach(user -> System.out.println(user));
+        System.out.println(dependencyInjectDemo.user);
+        context.close();
+    }
+  ```
 
 ​    
 
