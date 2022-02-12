@@ -6,11 +6,28 @@
 
     <groupId>sizhe.chen</groupId>
     <artifactId>spring-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${project.version}</version>
+    <modules>
+        <module>think-in-spring</module>
+        <module>java-beans-demo</module>
+    </modules>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.4</version>
+    </parent>
 
     <properties>
         <maven.compiler.source>13</maven.compiler.source>
         <maven.compiler.target>13</maven.compiler.target>
+        <project.version>1.0-SNAPSHOT</project.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+    </dependencies>
 </project>
