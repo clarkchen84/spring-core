@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <import resource="dependency-setter-injection.xml"/>
+    <bean name="userHolder" class="sizhe.chen.thinking.in.spring.ioc.dependency.injection.UserHolder">
+        <constructor-arg name="user" ref="user"/>
+    </bean>
+
+    <bean name="stringHolder"  class="sizhe.chen.thinking.in.spring.ioc.dependency.injection.StringHolder">
+        <constructor-arg index="0" value="name2"/>
+        <constructor-arg index="1" value="name1"/>
+    </bean>
+
+
+</beans>
