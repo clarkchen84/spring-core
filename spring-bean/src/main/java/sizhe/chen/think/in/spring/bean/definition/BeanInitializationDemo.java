@@ -29,7 +29,7 @@ public class BeanInitializationDemo {
         context.close();
     }
     @Bean(initMethod = "initUserFactory",destroyMethod = "destroyUserFactory")
-    @Lazy
+    //@Lazy
     public UserFactory userFactory(){
         return new InitialTestUserFactory();
     }
