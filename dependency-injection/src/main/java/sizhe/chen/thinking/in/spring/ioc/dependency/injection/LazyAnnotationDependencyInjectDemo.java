@@ -14,8 +14,9 @@ public class LazyAnnotationDependencyInjectDemo {
 
     @Autowired
     private User user;
-    @Autowired
-    private ObjectProvider<User> userObjectProvider;
+//    @Autowired
+//    private ObjectProvider<User> userObjectProvider;
+
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(LazyAnnotationDependencyInjectDemo.class);
@@ -23,7 +24,7 @@ public class LazyAnnotationDependencyInjectDemo {
         reader.loadBeanDefinitions("classpath:/META-INF/dependency-setter-injection.xml");
         context.refresh();
         LazyAnnotationDependencyInjectDemo dependencyInjectDemo = context.getBean(LazyAnnotationDependencyInjectDemo.class);
-        dependencyInjectDemo.userObjectProvider.stream().forEach(user -> System.out.println(user));
+     //   dependencyInjectDemo.userObjectProvider.stream().forEach(user -> System.out.println(user));
         System.out.println(dependencyInjectDemo.user);
         context.close();
     }

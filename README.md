@@ -143,6 +143,10 @@
         context.close();
     }
   ```
+  #### 依赖处理的过程
+  1. 入口 `DefaultListableBeanFactory#resolveDependency`
+  2. 依赖描描述符`DependencyDescriptor`
+  3. 自动绑定候选对象处理器 `AutowireCandidateResolver`
 
 ​    
 
