@@ -9,7 +9,7 @@
 #### 集合类型xml注入
 
 ``` xml
-<?xml version="1.0" encoding="UTF-8"?>
+  <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
@@ -142,15 +142,81 @@
         System.out.println(dependencyInjectDemo.user);
         context.close();
     }
+ ```
+
+#### 自定以依赖注入注解
+
+1. 基于AutoWiredAnnotationBeanPostProcessor实现
+
+   ``` java
+   @InjectedUser
+   private User injectedUser; 
+   
+   @Bean//(AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME)
+   public static AutowiredAnnotationBeanPostProcessor myAutowiredAnnotationBeanPostProcessor(){
+     AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor = new AutowiredAnnotationBeanPostProcessor();
+     Set<Class<? extends  Annotation>> classes = new LinkedHashSet<Class<? extends  Annotation>>(Arrays.asList(Autowired.class,Inject.class,InjectedUser.class));
+   
+     autowiredAnnotationBeanPostProcessor.setAutowiredAnnotationTypes(classes);
+     //        autowiredAnnotationBeanPostProcessor.setOrder(Ordered.LOWEST_PRECEDENCE - 1);
+     return autowiredAnnotationBeanPostProcessor;
+   }
+   ```
+
+   
+
+2. 直接继承@AutoWired注解
+
+   ``` java
+   @Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+   @Retention(RetentionPolicy.RUNTIME)
+   @Documented
+   @Autowired
+   public @interface MyAutoWired {
+       boolean required() default true;
+   }
+   ```
+
+   
+
+3. 自定义实现
+
+   1. 声明周期处理
+      1. InstantationAwareBeanPostProcessor
+      2. MergedBeanDefinitionPostProcessor
+   2. 元数据
+      1. InjectedElement
+      2. InjectionMetadata
+
+#### Spring 内建BeanDefinition
+
+* AnnotationConfigUtils会创建许多内建的Bean 
+
+  | Bean名称                                                     | Bean实例                                 | 使用场景                                |
+  | ------------------------------------------------------------ | ---------------------------------------- | --------------------------------------- |
+  | org.springframework.context.annotation.<br />internalConfigurarationAnnotationProcessor | ConfigurationClassPostProcessor对象      | 处理Spring配置类                        |
+  | org.springframework.context.annotation.<br />internalAutoWiredAnnotationProcessor | AutowiredAnnotationBeanPostProcessor对象 | 处理@Autowred以及@Value注解             |
+  | org.springframework.context.annotation.<br />internalCommonAnnotationProcessor | CommonAnnotationBeanPostProcessor        | 处理Jsr250注解@PostConstruct的等        |
+  | org.springframework.context.annotation.<br />internalEventListenerProcessor | EventListenerMethodProcessor             | 处理@EventListerner的spring事件监听方法 |
+  | environment                                                  | Environment对象                          | 外部化配置以及profiles                  |
+  | systemProperiteis                                            | java.util.Properties对象                 | java系统属性                            |
+  | systemEnvironment                                            | java.util.Map对象                        | 操作系统环境变量                        |
+  | messageSource                                                | MessageSource对象                        | 国际化文案                              |
+  | lifecycleProcessor                                           | LifeCycleProcessor对象                   | LifeCycle Bean 处理器                   |
+  | applicationEventMultiCaster                                  | ApplicationEventMultiCaster对象          | spring事件广播起                        |
+
+* 在xml配置文件中追加注解的使用可以追加配置  
+
+  ``` xml
+  <context:annotation-config/>
+  <context:component-scan base-package="org"/>
   ```
   #### 依赖处理的过程
   1. 入口 `DefaultListableBeanFactory#resolveDependency`
   2. 依赖描描述符`DependencyDescriptor`
   3. 自动绑定候选对象处理器 `AutowireCandidateResolver`
 
-​    
-
-
+  
 
 # 使用maven
 

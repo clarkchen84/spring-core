@@ -13,6 +13,8 @@
         <module>spring-dependency</module>
         <module>dependency-injection</module>
         <module>dependency-source</module>
+        <module>think-in-spring</module>
+        <module>java-beans-demo</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

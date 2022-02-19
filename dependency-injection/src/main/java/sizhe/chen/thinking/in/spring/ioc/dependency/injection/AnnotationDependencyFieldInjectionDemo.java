@@ -1,20 +1,47 @@
 package sizhe.chen.thinking.in.spring.ioc.dependency.injection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import sizhe.chen.think.in.spring.ioc.overview.dependency.domain.User;
+import sizhe.chen.thinking.in.spring.ioc.dependency.annotation.InjectedUser;
+import sizhe.chen.thinking.in.spring.ioc.dependency.annotation.MyAutoWired;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static org.springframework.context.annotation.AnnotationConfigUtils.AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME;
 
 
 /**
  * 基于java注解的依赖字段注入示例
  */
 public class AnnotationDependencyFieldInjectionDemo {
+
+    @MyAutoWired
+    private User user;
+
+    @InjectedUser
+    private User injectedUser;
+
+    @Bean//(AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME)
+    public static AutowiredAnnotationBeanPostProcessor myAutowiredAnnotationBeanPostProcessor(){
+        AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor = new AutowiredAnnotationBeanPostProcessor();
+        Set<Class<? extends  Annotation>> classes = new LinkedHashSet<Class<? extends  Annotation>>(Arrays.asList(Autowired.class,Inject.class,InjectedUser.class));
+
+        autowiredAnnotationBeanPostProcessor.setAutowiredAnnotationTypes(classes);
+//        autowiredAnnotationBeanPostProcessor.setOrder(Ordered.LOWEST_PRECEDENCE - 1);
+        return autowiredAnnotationBeanPostProcessor;
+    }
 
 
     //@Autowired 会忽略静态字段。忽略这件事是在AutowiredAnnotationBeanPostProcessor 中做的
@@ -43,6 +70,8 @@ public class AnnotationDependencyFieldInjectionDemo {
         System.out.println(context.getBean(AnnotationDependencyFieldInjectionDemo.class).userHolder);
         System.out.println(context.getBean(AnnotationDependencyFieldInjectionDemo.class).userHolder2);
         System.out.println(context.getBean(AnnotationDependencyFieldInjectionDemo.class).userHolder3);
+        System.out.println(context.getBean(AnnotationDependencyFieldInjectionDemo.class).user);
+        System.out.println(context.getBean(AnnotationDependencyFieldInjectionDemo.class).injectedUser);
 
     }
 
